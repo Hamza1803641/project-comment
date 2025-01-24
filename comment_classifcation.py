@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 dataset = pd.read_csv('train.csv')
 
 label_encoders = {}
-for column in ["id","comment_text"]:
+for column in ["id", "comment_text"]:
     le = LabelEncoder()
     dataset[column] = le.fit_transform(dataset[column])
     label_encoders[column] = le
@@ -17,9 +17,8 @@ dataset.describe()
 X = dataset.drop(columns=["identity_hate"])  # Features
 Y = dataset["identity_hate"]  # Target
 
-print(X)
-
-print(Y)
+#print(X)
+#print(Y)
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.4, random_state=0)
 
@@ -31,11 +30,9 @@ Y_pred = model.predict(X_test)
 accuracy = accuracy_score(Y_test, Y_pred)
 print(f"Accuracy: {accuracy}")
 
-# Display the classification report
-print("Classification Report:\n", classification_report(Y_test, Y_pred))
-
-# Display the confusion matrix
-print("Confusion Matrix:\n", confusion_matrix(Y_test, Y_pred))
+# Display the classification report with zero_division=0
+print("Classification Report:\n", classification_report(Y_test, Y_pred, zero_division=0))
 
 # Show predictions alongside actual values
 comparison_df = pd.DataFrame({"Actual": Y_test.values, "Predicted": Y_pred})
+#print(dataset.describe())
