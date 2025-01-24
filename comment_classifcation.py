@@ -30,6 +30,7 @@ Y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(Y_test, Y_pred)
 print(f"Accuracy: {accuracy}")
+
 # Display the classification report
 print("Classification Report:\n", classification_report(Y_test, Y_pred))
 
