@@ -35,8 +35,5 @@ print(f"\nAccuracy: {accuracy}\n")
 # Display the classification report
 print("Classification Report:\n", classification_report(Y_test, Y_pred))
 
-# Display the confusion matrix
-print("Confusion Matrix:\n", confusion_matrix(Y_test, Y_pred))
-
 # Show predictions alongside actual values
 comparison_df = pd.DataFrame({"Actual": Y_test.values, "Predicted": Y_pred})
