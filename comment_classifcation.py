@@ -4,17 +4,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 
-dataset = pd.read_csv('Drugs.csv')
+dataset = pd.read_csv('train.csv')
 
 label_encoders = {}
-for column in ['Gender', 'BP', 'Cholesterol', 'Drug']:
+for column in ["id","comment_text","toxic","severe_toxic","obscene","threat","insult","identity_hate"]:
     le = LabelEncoder()
     dataset[column] = le.fit_transform(dataset[column])
     label_encoders[column] = le
 
 dataset.describe()
-X = dataset.drop(columns=["Drug"])  # Features
-Y = dataset["Drug"]  # Target
+X = dataset.drop(columns=["identity_hate"])  # Features
+Y = dataset["identity_hate"]  # Target
 
 print(X)
 
