@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score
 dataset = pd.read_csv('train.csv')
 
 label_encoders = {}
-for column in ["id","comment_text","toxic","severe_toxic","obscene","threat","insult","identity_hate"]:
+for column in ["id","comment_text"]:
     le = LabelEncoder()
     dataset[column] = le.fit_transform(dataset[column])
     label_encoders[column] = le
@@ -25,7 +25,6 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.4, random_
 model = GaussianNB()
 
 model.fit(X_train, Y_train)
-
 Y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(Y_test, Y_pred)
