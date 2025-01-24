@@ -3,6 +3,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 dataset = pd.read_csv('train.csv')
 
@@ -29,3 +30,11 @@ Y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(Y_test, Y_pred)
 print(f"Accuracy: {accuracy}")
+# Display the classification report
+print("Classification Report:\n", classification_report(Y_test, Y_pred))
+
+# Display the confusion matrix
+print("Confusion Matrix:\n", confusion_matrix(Y_test, Y_pred))
+
+# Show predictions alongside actual values
+comparison_df = pd.DataFrame({"Actual": Y_test.values, "Predicted": Y_pred})
