@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 
-# Assuming the CSV file is in the same directory as your script
 dataset = pd.read_csv('Drugs.csv')
 
 label_encoders = {}
