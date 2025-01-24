@@ -40,4 +40,3 @@ print("Confusion Matrix:\n", confusion_matrix(Y_test, Y_pred))
 
 # Show predictions alongside actual values
 comparison_df = pd.DataFrame({"Actual": Y_test.values, "Predicted": Y_pred})
-print("\nPredictions vs Actual:\n", comparison_df)
