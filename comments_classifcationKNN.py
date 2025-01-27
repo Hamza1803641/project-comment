@@ -10,24 +10,19 @@ import traceback
 
 PORT = 8000
 
-# Load dataset and train the model once when the server starts
 try:
     dataset = pd.read_csv('train.csv')
 
-    # Use CountVectorizer to convert text into numerical features
     vectorizer = CountVectorizer()
     X = vectorizer.fit_transform(dataset['comment_text'])  # Features
     Y = dataset["toxic"]  # Target
 
-    # Train-test split
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.4, random_state=0)
 
-    # Train KNN model
-    model = KNeighborsClassifier(n_neighbors=5)  # Default: 5 neighbors
+    model = KNeighborsClassifier(n_neighbors=5)  
     model.fit(X_train, Y_train)
     Y_pred = model.predict(X_test)
 
-    # Get accuracy
     accuracy = accuracy_score(Y_test, Y_pred)
     print("Model trained successfully with KNN!")
     print(f"Accuracy: {accuracy:.2f}")
@@ -35,11 +30,9 @@ except Exception as e:
     print(f"Error during model training: {e}")
     traceback.print_exc()
 
-# Create an HTTP request handler
 class MyHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
-            # Create a simple HTML response with CSS for styling and a form for user input
             html_content = f"""
             <html>
                 <head>
@@ -122,34 +115,25 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
             </html>
             """
 
-            # Send response headers
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
 
-            # Send the HTML content
             self.wfile.write(html_content.encode('utf-8'))
-        else:
-            super().do_GET()
-
+        
     def do_POST(self):
         if self.path == '/predict':
             try:
-                # Get the length of the data
                 content_length = int(self.headers['Content-Length'])
-                # Read the data from the request
                 post_data = self.rfile.read(content_length).decode('utf-8')
-                # Parse the form data
                 post_params = parse_qs(post_data)
+
                 comment = post_params.get('comment', [''])[0]
 
-                # Convert the comment into numerical features using the trained vectorizer
                 comment_vectorized = vectorizer.transform([comment])
 
-                # Predict toxicity level
                 toxicity_level = model.predict(comment_vectorized)[0]
 
-                # Create a response HTML
                 html_content = f"""
                 <html>
                     <head>
@@ -203,12 +187,10 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                 </html>
                 """
 
-                # Send response headers
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
 
-                # Send the HTML content
                 self.wfile.write(html_content.encode('utf-8'))
             except Exception as e:
                 print(f"Error during prediction: {e}")
@@ -217,7 +199,6 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
         else:
             self.send_error(404, "File Not Found")
 
-# Set up the HTTP server
 with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
     print(f"Serving on port {PORT}...")
     httpd.serve_forever()
