@@ -196,8 +196,6 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                 print(f"Error during prediction: {e}")
                 traceback.print_exc()
                 self.send_error(500, "Internal Server Error")
-        else:
-            self.send_error(404, "File Not Found")
 
 with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
     print(f"Serving on port {PORT}...")
