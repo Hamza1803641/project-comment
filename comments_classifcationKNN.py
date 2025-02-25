@@ -16,7 +16,9 @@ try:
     vectorizer = CountVectorizer()
     X = vectorizer.fit_transform(dataset['comment_text'])  # Features
     Y = dataset["toxic"]  # Target
-
+  #  print (dataset.describe())
+    #print (X)
+    #print (Y)
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.4, random_state=0)
 
     model = KNeighborsClassifier(n_neighbors=5)  
@@ -24,8 +26,8 @@ try:
     Y_pred = model.predict(X_test)
 
     accuracy = accuracy_score(Y_test, Y_pred)
-    print("Model trained successfully with KNN!")
-    print(f"Accuracy: {accuracy:.2f}")
+
+    #print(f"Accuracy: {accuracy:.2f}")
 except Exception as e:
     print(f"Error during model training: {e}")
     traceback.print_exc()
@@ -102,7 +104,7 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                 <body>
                     <div class="container">
                         <h1>Comment Toxicity Predictor</h1>
-                        <p><strong>Model Accuracy:</strong> {accuracy:.2f}</p>
+                        <p><strong>Model Accuracy:</strong> {accuracy*100:.2f}%</p>
 
                         <h2>Enter a Comment:</h2>
                         <form method="POST" action="/predict">
