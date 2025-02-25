@@ -8,7 +8,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from urllib.parse import parse_qs
 import traceback
 
-PORT = 8000
+PORT = 8001
 
 try:
     dataset = pd.read_csv('train.csv')
@@ -24,7 +24,7 @@ try:
     Y_pred = model.predict(X_test)
 
     accuracy = accuracy_score(Y_test, Y_pred)
-    print("Model trained successfully!")
+   
     print(f"Accuracy: {accuracy:.2f}")
 except Exception as e:
     print(f"Error during model training: {e}")
